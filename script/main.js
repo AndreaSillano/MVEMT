@@ -33,10 +33,10 @@ const status = document.createElement('p');
 box.appendChild(status);
 const received = document.createElement('ul');
 box.appendChild(received);
-const sender = document.createElement('input');
-sender.placeholder = 'Press enter to send';
-box.appendChild(sender);
-document.body.appendChild(box);
+//const sender = document.createElement('input');
+//sender.placeholder = 'Press enter to send';
+//box.appendChild(sender);
+//document.body.appendChild(box);
 
 conn.on('open', () => {
     status.innerHTML = `Open`;
@@ -47,21 +47,24 @@ conn.on('open', () => {
     received.appendChild(li);
     });
 
-    sender.addEventListener('keydown', e => {
-    if (e.keyCode === 13 && sender.value) {
-       // conn.send(sender.value);
-       for(var i=0;i<connections.length;i++){
-             connections[i].send(sender.value);
-             if(gen != ""){
-                connections[i].send(gen);
-             }
-        }
+    sendG.addEventListener('click', e => {
+        // conn.send(sender.value);
+        var ele = document.getElementsByName('Genre');   
+            for(i = 0; i < ele.length; i++) {
+                if(ele[i].checked)
+                gen = ele[i].value + ","+ gen;
+            }
+        for(var i=0;i<connections.length;i++){
+                //connections[i].send(sender.value);
+                if(gen != "" & hostId != ""){
+                    connections[i].send(gen);
+                }
+            }
         const li = document.createElement('li');
         li.className = 'your message';
-        li.textContent = sender.value;
+        li.textContent = gen;
         received.appendChild(li);
-        sender.value = '';
-    }
+        gen = '';
     });
 });
 
@@ -81,15 +84,6 @@ if(hostId != ""){
 
 }
 
-sendG.addEventListener('click', e =>{
-    
-    var ele = document.getElementsByName('Genre');   
-            for(i = 0; i < ele.length; i++) {
-                if(ele[i].checked)
-                gen = gen +","+ ele[i].value;
-            }
-
-});
 
 
 /* handleConnection(conn){
