@@ -2,7 +2,6 @@ var queryString = window.location.search;
 var urlParams = new URLSearchParams(queryString);
 var hostId ="";
 hostId = urlParams.get('id')
-//console.log(product);
 var remotePeerIds=[],// You need this to link with specific DOM element
 connections=[]; 
 
