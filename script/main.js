@@ -51,13 +51,18 @@ conn.on('open', () => {
         // conn.send(sender.value);
         var ele = document.getElementsByName('Genre');   
             for(i = 0; i < ele.length; i++) {
-                if(ele[i].checked)
-                gen = ele[i].value + ","+ gen;
+                if(ele[i].checked){
+                    if(i== 0){
+                        gen = ele[i].value;
+                    }else{
+                        gen = gen+","+ele[i].value;
+                    }
+                }
+                
             }
         for(var i=0;i<connections.length;i++){
                 //connections[i].send(sender.value);
-                if(gen != "" && hostId != ""){
-                    console.log(hostId);
+                if(gen != null && hostId != null){
                     connections[i].send(gen);
                 }
             }
