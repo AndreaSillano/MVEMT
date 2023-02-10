@@ -57,6 +57,7 @@ conn.on('open', () => {
         for(var i=0;i<connections.length;i++){
                 //connections[i].send(sender.value);
                 if(gen != "" && hostId != ""){
+                    console.log(hostId);
                     connections[i].send(gen);
                 }
             }
