@@ -1,4 +1,3 @@
-
 var queryString = window.location.search;
 var urlParams = new URLSearchParams(queryString);
 var hostId ="";
@@ -65,6 +64,7 @@ conn.on('open', () => {
         if(counter-1 == connections.length){
             stato =1;
             movies = getMovies();
+
         }
     }
     
@@ -107,6 +107,7 @@ conn.on('open', () => {
                 if(counter == connections.length){
                     stato = 1;
                     movies = getMovies();
+                    
                 }
                
             }
@@ -134,34 +135,65 @@ if(hostId != null){
 
 
 function getMovies(){
-
-	(async () => {
+    //loadJSON("https://jsonplaceholder.typicode.com/posts", myData,'jsonp');
+	/*(async () => {
       await get()
       console.log()
       // handle the tags result here
-    })()
+    })()*/
+
+    const myArray = generiTot.split(",");
+    var geners =myArray[1];
+    for(var i = 2; i< myArray.length; i++){
+        geners = geners +"2%C"+myArray[i]
+    }
+    console.log(geners);
+    var url = "https://api.themoviedb.org/3/discover/movie?api_key=03504e692774bc37a2813d009ea907f8&language=en-US&page=5&with_genres="+geners;
+    loadJSON(url, myData,'jsonp');
 
 
-	async function get() {
 
-	
-	
-	const myArray = generiTot.split(",");
-	var geners =myArray[1];
-	for(var i = 2; i< myArray.length; i++){
-		geners = geners +"2%C"+myArray[i]
-	}
-	console.log(geners);
-	var url = "https://api.themoviedb.org/3/discover/movie?api_key=03504e692774bc37a2813d009ea907f8&language=en-US&page=5&with_genres="+geners;
+    /*
     let obj = await (await fetch(url)).json();
     //console.log(obj);
-    //console.log(obj);
+    console.log(obj);
     swiper1.style.visibility='visible';
+    parsMovies(obj);
     return obj;
-}
+}*/
 }
 
+function loadJSON(path, success, error) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        success(JSON.parse(xhr.responseText));
+      }
+      else {
+        error(xhr);
+      }
+    }
+  };
+  xhr.open('GET', path, true);
+  xhr.send();
+}
 
+function myData(Data){
+
+  // Output only the details on the first post
+  //console.log(Data.results[0]);
+  for(var i = 0; i<Data.results.length; i++){
+        console.log("https://image.tmdb.org/t/p/w500/"+Data.results[i].poster_path);
+        urls.push("https://image.tmdb.org/t/p/w500/"+Data.results[i].poster_path);
+  }
+  swiper1.style.visibility='visible';
+    for(let i=0; i<5; i++){
+        appendNewCard();
+    }
+  // output the details of first three posts
+  
+}
 /* handleConnection(conn){
     remotePeerIds.push(conn.peer); // Add remote peer to list
 
@@ -183,4 +215,3 @@ function getMovies(){
         connections.push(conn);
     });
 }*/
-//CIAO 2
