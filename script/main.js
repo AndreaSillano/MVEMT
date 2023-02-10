@@ -8,6 +8,8 @@ connections=[];
 const peerIDDisplay = document.getElementById('peer-id');
 const linkHost = document.getElementById('link');
 const sendG = document.getElementById('sendGen');
+const genreSelection = document.getElementById('div_genres');
+genreSelection.style.visibility='hidden';
 var gen = "";
 var myId = "";
 let peer;
@@ -23,6 +25,7 @@ peer.on('connection', conn => connection(conn, false));
 
 function connection(conn, byMe) {
 remotePeerIds.push(conn.peer); 
+genreSelection.style.visibility='visible';
 const box = document.createElement('div');
 box.className = 'boxed connection';
 box.innerHTML = `<h3>Connection with ${conn.peer}</h3><p>Made by ${byMe ? 'me' : 'them'}</p>`;
