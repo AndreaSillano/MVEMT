@@ -27,7 +27,7 @@
             peer = new Peer({debug: 3});
             peer.on('open', id => {
                 peerIDDisplay.textContent = 'Your ID: ' + id;
-                var url1 = new URL(queryString);
+                var url1 = new URL(document.URL);
                 url1.searchParams.append('id',id);
                 linkHost.textContent = 'Host Link: ' + url1;
             });
