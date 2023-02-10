@@ -80,7 +80,7 @@ if(hostId != ""){
 
 sendG.addEventListener('click', e =>{
     
-    var ele = document.getElementsByName('genre');   
+    var ele = document.getElementsByName('Genre');   
             for(i = 0; i < ele.length; i++) {
                 if(ele[i].checked)
                 gen = gen +","+ ele[i].value;
