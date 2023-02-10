@@ -36,7 +36,7 @@ box.appendChild(received);
 //const sender = document.createElement('input');
 //sender.placeholder = 'Press enter to send';
 //box.appendChild(sender);
-//document.body.appendChild(box);
+document.body.appendChild(box);
 
 conn.on('open', () => {
     status.innerHTML = `Open`;
