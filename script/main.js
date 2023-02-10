@@ -7,6 +7,8 @@ connections=[];
 
 const peerIDDisplay = document.getElementById('peer-id');
 const linkHost = document.getElementById('link');
+const sendG = document.getElementById('sendGen');
+var gen = "";
 var myId = "";
 let peer;
 peer = new Peer({debug: 3});
@@ -47,6 +49,9 @@ conn.on('open', () => {
        // conn.send(sender.value);
        for(var i=0;i<connections.length;i++){
              connections[i].send(sender.value);
+             if(gen != ""){
+                connections[i].send(gen);
+             }
         }
         const li = document.createElement('li');
         li.className = 'your message';
@@ -72,6 +77,16 @@ if(hostId != ""){
     }
 
 }
+
+sendG.addEventListener('click', e =>{
+    
+    var ele = document.getElementsByName('genre');   
+            for(i = 0; i < ele.length; i++) {
+                if(ele[i].checked)
+                gen = gen +","+ ele[i].value;
+            }
+
+});
 
 
 /* handleConnection(conn){
