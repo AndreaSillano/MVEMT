@@ -1,7 +1,8 @@
+
 var queryString = window.location.search;
 var urlParams = new URLSearchParams(queryString);
 var hostId ="";
-hostId = urlParams.get('id')
+hostId = urlParams.get('id');
 var remotePeerIds=[],// You need this to link with specific DOM element
 connections=[]; 
 
@@ -9,10 +10,20 @@ const peerIDDisplay = document.getElementById('peer-id');
 const linkHost = document.getElementById('link');
 const sendG = document.getElementById('sendGen');
 const genreSelection = document.getElementById('div-genres');
+const swiper1 = document.getElementById('bd');
+swiper1.style.visibility='hidden';
 genreSelection.style.visibility='hidden';
 var gen = "";
 var myId = "";
 let peer;
+var host = 0;
+
+var stato = 0; //stato = 0 => devo prendere i generi , stato = 1=>host fa query
+var passed = 0;
+var counter = 0; //counter connection answer
+
+var generiTot = "";
+var showSelection = 0;
 peer = new Peer({debug: 3});
 peer.on('open', id => {
     peerIDDisplay.textContent = 'Your ID: ' + id;
@@ -20,12 +31,18 @@ peer.on('open', id => {
     url1.searchParams.append('id',id);
     linkHost.textContent = 'Host Link: ' + url1;
 });
-
+var movies ;
 peer.on('connection', conn => connection(conn, false));
 
 function connection(conn, byMe) {
+
 remotePeerIds.push(conn.peer); 
-genreSelection.style.visibility='visible';
+
+
+if(showSelection== 0){
+    genreSelection.style.visibility= 'visible';
+    showSelection = 1;
+}
 const box = document.createElement('div');
 box.className = 'boxed connection';
 box.innerHTML = `<h3>Connection with ${conn.peer}</h3><p>Made by ${byMe ? 'me' : 'them'}</p>`;
@@ -37,14 +54,23 @@ box.appendChild(received);
 //sender.placeholder = 'Press enter to send';
 //box.appendChild(sender);
 document.body.appendChild(box);
-
 conn.on('open', () => {
     status.innerHTML = `Open`;
     conn.on('data', data => {
     const li = document.createElement('li');
     li.className = 'their message';
-    li.textContent = data;
+    if(stato==0 && host ==1){
+        generiTot = generiTot +data; 
+        counter++;   
+        if(counter-1 == connections.length){
+            stato =1;
+            movies = getMovies();
+        }
+    }
+    
+    li.textContent = generiTot;
     received.appendChild(li);
+        
     });
 
     sendG.addEventListener('click', e => {
@@ -54,7 +80,7 @@ conn.on('open', () => {
                 if(ele[i].checked){
                     if(i== 0){
                         gen = ele[i].value;
-                    }else{
+                    }else if(gen != null){
                         gen = gen+","+ele[i].value;
                     }
                 }
@@ -66,12 +92,26 @@ conn.on('open', () => {
                     connections[i].send(gen);
                 }
             }
-        const li = document.createElement('li');
-        li.className = 'your message';
-        li.textContent = gen;
-        received.appendChild(li);
-        gen = '';
-    });
+
+            genreSelection.style.visibility='hidden';
+
+            if(stato==0 && host ==1){
+                console.log(generiTot);
+                generiTot = generiTot + gen;
+                const li = document.createElement('li');
+                li.className = 'your message';
+                li.textContent = generiTot;
+                received.appendChild(li);
+                gen = '';
+                passed = 1;
+                if(counter == connections.length){
+                    stato = 1;
+                    movies = getMovies();
+                }
+               
+            }
+        });
+        
 });
 
 conn.on('close', () => {
@@ -82,14 +122,44 @@ connections.push(conn);
 
 }
 
-if(hostId != ""){
+if(hostId != null){
     const otherID = hostId;
     if (otherID) {
         connection(peer.connect(otherID), true);
     }
-
+    linkHost.style.visibility = "hidden";
+}else{
+    host = 1;
 }
 
+
+function getMovies(){
+
+	(async () => {
+      await get()
+      console.log()
+      // handle the tags result here
+    })()
+
+
+	async function get() {
+
+	
+	
+	const myArray = generiTot.split(",");
+	var geners =myArray[1];
+	for(var i = 2; i< myArray.length; i++){
+		geners = geners +"2%C"+myArray[i]
+	}
+	console.log(geners);
+	var url = "https://api.themoviedb.org/3/discover/movie?api_key=03504e692774bc37a2813d009ea907f8&language=en-US&page=5&with_genres="+geners;
+    let obj = await (await fetch(url)).json();
+    //console.log(obj);
+    //console.log(obj);
+    swiper1.style.visibility='visible';
+    return obj;
+}
+}
 
 
 /* handleConnection(conn){
