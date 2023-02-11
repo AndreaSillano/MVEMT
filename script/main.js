@@ -52,7 +52,7 @@ box.appendChild(received);
 //sender.placeholder = 'Press enter to send';
 //box.appendChild(sender);
 document.body.appendChild(box);
-conn.on('open', () => {
+conn.on('open' || 'OPEN', () => {
     status.innerHTML = `Open`;
     conn.on('data', data => {
     const li = document.createElement('li');
