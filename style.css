@@ -110,22 +110,22 @@ width:  100vw;
 
 @media screen and (max-device-width: 980px){
     .card{
-        left: 30%;
-        top: 20%;
+        top: -10%;
+        scale: 0.4;
     }
 
     #like,
     #dislike{
-        scale: 0.7;
+        scale: 0.35;
         top: 40%;
     }
 
     #like{
-        right: 20%;
+        left: 70%;
     }
 
     #dislike{
-        left: 20%;
+        left: -10%;
     }
 
 }
