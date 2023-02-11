@@ -16,7 +16,6 @@ var gen = "";
 var myId = "";
 let peer;
 var host = 0;
-
 var stato = 0; //stato = 0 => devo prendere i generi , stato = 1=>host fa query
 var passed = 0;
 var counter = 0; //counter connection answer
@@ -66,12 +65,24 @@ conn.on('open', () => {
             movies = getMovies();
 
         }
+            li.textContent = generiTot;
+            received.appendChild(li);
     }
-    
-    li.textContent = generiTot;
-    received.appendChild(li);
+    else if(stato == 1 && host == 0){ // non sono host ricevo il vettore di dati per le figurine
+        for(var i = 0; i<data.length; i++){
+        //console.log("https://image.tmdb.org/t/p/w500/"+Data.results[i].poster_path);
+        urls.push("https://image.tmdb.org/t/p/w500/"+data[i].poster_path);
+          }
+            swiper1.style.visibility='visible';
+            totCardurls = data.length;
+            for(let i=0; i<3; i++){
+                appendNewCard();
+            }
         
-    });
+
+    }
+        
+});
 
     sendG.addEventListener('click', e => {
         // conn.send(sender.value);
@@ -111,6 +122,7 @@ conn.on('open', () => {
                 }
                
             }
+            stato =1;
         });
         
 });
@@ -184,13 +196,19 @@ function myData(Data){
   // Output only the details on the first post
   //console.log(Data.results[0]);
   for(var i = 0; i<Data.results.length; i++){
-        console.log("https://image.tmdb.org/t/p/w500/"+Data.results[i].poster_path);
+        //console.log("https://image.tmdb.org/t/p/w500/"+Data.results[i].poster_path);
         urls.push("https://image.tmdb.org/t/p/w500/"+Data.results[i].poster_path);
   }
-  swiper1.style.visibility='visible';
-    for(let i=0; i<5; i++){
+    swiper1.style.visibility='visible';
+    totCardurls = Data.results.length;
+    for(let i=0; i<3; i++){
         appendNewCard();
     }
+    for(var i=0;i<connections.length;i++){
+            //connections[i].send(sender.value);
+           connections[i].send(Data.results);
+    }
+    
   // output the details of first three posts
   
 }
