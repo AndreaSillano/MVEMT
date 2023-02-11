@@ -1,11 +1,17 @@
 class Card{
     constructor({
         imageUrl,
-        onDismiss
+        onDismiss,
+        onLike,
+        onDislike,
+        index
     }){
         this.imageUrl = imageUrl;
         this.onDismiss = onDismiss;
+        this.onLike = onLike;
+        this.onDislike = onDislike;
         this.#init();
+        this.index = index;
     }
 
     //private properties
@@ -82,6 +88,15 @@ class Card{
 
         if(typeof this.onDismiss === 'function'){
             this.onDismiss();
+        }
+
+        if(typeof this.onLike === 'function' && direction === 1){
+            this.onLike();
+            console.log(this.index);
+        }
+
+        if(typeof this.onDislike === 'function' && direction === -1){
+            this.onDislike();
         }
     }
 }

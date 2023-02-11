@@ -10,8 +10,12 @@ const linkHost = document.getElementById('link');
 const sendG = document.getElementById('sendGen');
 const genreSelection = document.getElementById('div-genres');
 const swiper1 = document.getElementById('bd');
+const like1 = document.getElementById('like');
+const dislike1 = document.getElementById('dislike');
 swiper1.style.visibility='hidden';
 genreSelection.style.visibility='hidden';
+like1.style.visibility='hidden';
+dislike1.style.visibility = 'hidden';
 var gen = "";
 var myId = "";
 let peer;
@@ -79,6 +83,8 @@ conn.on('open', () => {
         urls.push("https://image.tmdb.org/t/p/w500/"+data[i].poster_path);
           }
             swiper1.style.visibility='visible';
+            like1.style.visibility='visible';
+            dislike1.style.visibility = 'visible';
             totCardurls = data.length;
             for(let i=0; i<3; i++){
                 appendNewCard();
@@ -205,6 +211,8 @@ function myData(Data){
         urls.push("https://image.tmdb.org/t/p/w500/"+Data.results[i].poster_path);
   }
     swiper1.style.visibility='visible';
+    like1.style.visibility='visible';
+    dislike1.style.visibility = 'visible';
     totCardurls = Data.results.length;
     for(let i=0; i<3; i++){
         appendNewCard();

@@ -54,3 +54,56 @@ width:  100vw;
     object-fit: cover;
     object-position: 50% 50%;
 }
+#like,
+#dislike{
+    font-size: 16vh;
+    border-radius: 50%;
+    padding: 20px;
+    position: absolute;
+    z-index: 1;
+    animation-name: iconAnimation1;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    /* don't run animation at the beginning*/
+    animation-play-state: paused;
+}
+
+#like.trigger,
+#dislike.trigger{
+    animation-name: iconAnimation2;
+}
+
+#like{
+    color: green;
+    background-color: rgba(255, 255, 255, 0.5);
+    right: 100px;
+}
+
+#dislike{
+    color: #ccc;
+    background-color: rgba(0, 0, 0, 0.5);
+    left: 100px;
+}
+
+@keyframes iconAnimation1 {
+    0%,
+    100%{
+        opacity: 0.2;
+    }
+    50%{
+        opacity: 1;
+    }
+    
+}
+
+@keyframes iconAnimation2 {
+    0%,
+    100%{
+        opacity: 0.2;
+    }
+    50%{
+        opacity: 1;
+    }
+    
+}
