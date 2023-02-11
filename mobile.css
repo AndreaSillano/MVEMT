@@ -1,0 +1,109 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+h1{}
+h2{}
+body{
+
+width:  100vw;
+    height: 100vh;
+ 
+    
+    justify-content: space-evenly;
+    align-items: center;
+    background: linear-gradient(0deg, #ff6036, #fd267a);
+}
+#bd{
+    
+}
+
+#swiper{
+    height: 70vh;
+    aspect-ratio: 2 / 3;
+    perspective: 600px;
+    perspective-origin: center 50%;
+    transform-style: preserve-3d;
+    position: absolute;
+     position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+}
+
+.card{
+    width: 60%;
+    height: 60%;
+    position: absolute;
+    border-radius: 20px;
+    overflow: hidden;
+    transform: translateZ(calc(-30px * var(--i)))
+    translateY(calc(-20px * var(--i))) rotate(calc(-4deg * var(--i)));
+    filter: drop-shadow(2px 2px 20px rgba(0, 0, 0, 0.5));
+    cursor: pointer;
+    user-select: none;
+}
+
+.card img{
+    width: 60%;
+    height: 60%;
+    object-fit: cover;
+    object-position: 50% 50%;
+}
+#like,
+#dislike{
+    font-size: 8vh;
+    border-radius: 50%;
+    padding: 20px;
+    position: absolute;
+    z-index: 1;
+    animation-name: iconAnimation1;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    /* don't run animation at the beginning*/
+    animation-play-state: paused;
+}
+
+#like.trigger,
+#dislike.trigger{
+    animation-name: iconAnimation2;
+}
+
+#like{
+    color: green;
+    background-color: rgba(255, 255, 255, 0.5);
+    right: 50px;
+}
+
+#dislike{
+    color: #ccc;
+    background-color: rgba(0, 0, 0, 0.5);
+    left: 50px;
+}
+
+@keyframes iconAnimation1 {
+    0%,
+    100%{
+        opacity: 0.2;
+    }
+    50%{
+        opacity: 1;
+    }
+    
+}
+
+@keyframes iconAnimation2 {
+    0%,
+    100%{
+        opacity: 0.2;
+    }
+    50%{
+        opacity: 1;
+    }
+    
+}
