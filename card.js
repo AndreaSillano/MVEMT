@@ -1,4 +1,5 @@
 class Card{
+    touchOrMouse=0;
     constructor({
         imageUrl,
         onDismiss,
@@ -38,6 +39,7 @@ class Card{
             // no transition when moving
             this.element.style.transition= '';
             document.addEventListener('mousemove', this.#handleMouseMove);
+            this.touchOrMouse=0;
         });
 
         //mouseup
@@ -50,6 +52,7 @@ class Card{
             // no transition when moving
             this.element.style.transition= '';
             document.addEventListener('touchmove', this.#handleMouseMove);
+            this.touchOrMouse=1;
         });
 
         //touchend
@@ -96,8 +99,15 @@ class Card{
 
     #dismiss = (direction) => {
         this.#startPoint = null;
-        document.removeEventListener('mouseup', this.#handleMouseUp);
-        document.removeEventListener('mousemove', this.#handleMouseMove);
+        if(this.touchOrMouse === 0){
+            document.removeEventListener('mouseup', this.#handleMouseUp);
+            document.removeEventListener('mousemove', this.#handleMouseMove);
+        }
+
+        if(this.touchOrMouse === 1){
+            document.removeEventListener('touchend', this.#handleMouseUp);
+            document.removeEventListener('touchmove', this.#handleMouseMove);
+        }
 
         this.element.style.transition = 'transform 1s';
         this.element.style.transform = `translate(${direction * window.innerWidth}px, ${this.#offsetY}px) rotate(${90 * direction}deg)`;
