@@ -1,3 +1,4 @@
+var cardHost = [];
 class Card{
     touchOrMouse=0;
     constructor({
@@ -123,6 +124,19 @@ class Card{
         if(typeof this.onLike === 'function' && direction === 1){
             this.onLike();
             console.log(this.index);
+            
+            if(host == 1){
+                cardHost.push(this.index);
+                checkMatch();
+            }else{
+                for(var i=0;i<connections.length;i++){
+                //connections[i].send(sender.value);
+                    connections[i].send(this.index);
+                
+                }
+            } 
+            
+            
         }
 
         if(typeof this.onDislike === 'function' && direction === -1){
