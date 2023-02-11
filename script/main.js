@@ -28,7 +28,7 @@ var generiTot = "";
 var showSelection = 0;
 peer = new Peer({debug: 3});
 
-
+var userFav =[];
 peer.on('open', id => {
     peerIDDisplay.textContent = 'Your ID: ' + id;
     var url1 = new URL(document.URL);
@@ -36,7 +36,7 @@ peer.on('open', id => {
     linkHost.textContent = 'Host Link: ' + url1;
 });
 
-var movies ;
+var movies;
 
 peer.on('connection', conn => connection(conn, false));
 
@@ -66,16 +66,21 @@ conn.on('open', () => {
     conn.on('data', data => {
     const li = document.createElement('li');
     li.className = 'their message';
+    console.log("STATO" +stato)
     if(stato==0 && host ==1){
         generiTot = generiTot +data; 
         counter++;   
         if(counter-1 == connections.length){
-            stato =1;
+            stato = 1;
+            stato = 2;
             movies = getMovies();
-
         }
             li.textContent = generiTot;
             received.appendChild(li);
+
+            
+    }else if(stato == 1 && host == 1){
+
     }
     else if(stato == 1 && host == 0){ // non sono host ricevo il vettore di dati per le figurine
         for(var i = 0; i<data.length; i++){
@@ -89,7 +94,19 @@ conn.on('open', () => {
             for(let i=0; i<3; i++){
                 appendNewCard();
             }
-        
+            stato =2;
+    }else if(stato == 2 && host == 1){
+        userFav.push(data);
+        checkMatch();
+        li.textContent = data;
+        received.appendChild(li);
+
+    }else if(stato == 2 && host == 0){
+        fireworks();
+        fadeSwiper();
+        like1.style.visibility='hidden';
+        dislike1.style.visibility = 'hidden';
+        swiper1.style.visibility='visible';
 
     }
         
@@ -125,15 +142,18 @@ conn.on('open', () => {
                 li.textContent = generiTot;
                 received.appendChild(li);
                 gen = '';
-                passed = 1;
                 if(counter == connections.length){
-                    stato = 1;
+                    stato = 2;
                     movies = getMovies();
-                    
+                    //stato = 2;
                 }
+                counter++;
                
+            }else if(stato==0 && host ==0){
+                 stato = 1;
             }
-            stato =1;
+           
+            //stato = 2;
         });
         
 });
@@ -155,7 +175,18 @@ if(hostId != null){
 }else{
     host = 1;
 }
-
+function fadeSwiper()
+{
+   
+    var oppArray = ["0.9", "0.8", "0.7", "0.6", "0.5", "0.4", "0.3", "0.2", "0.1", "0"];
+    var x = 0;
+    (function next() {
+        swiper1.style.opacity = oppArray[x];
+        if(++x < oppArray.length) {
+            setTimeout(next, 100); //depending on how fast you want to fade
+        }
+    })();
+}
 
 function getMovies(){
     //loadJSON("https://jsonplaceholder.typicode.com/posts", myData,'jsonp');
@@ -225,6 +256,55 @@ function myData(Data){
   // output the details of first three posts
   
 }
+function fireworks(){
+     var duration = 5 * 1000;
+                        var animationEnd = Date.now() + duration;
+                        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+                        function randomInRange(min, max) {
+                          return Math.random() * (max - min) + min;
+                        }
+
+                        var interval = setInterval(function() {
+                          var timeLeft = animationEnd - Date.now();
+
+                          if (timeLeft <= 0) {
+                            return clearInterval(interval);
+                          }
+
+                          var particleCount = 70 * (timeLeft / duration);
+                          // since particles fall down, start a bit higher than random
+                          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+                        }, 250);
+                                 
+}
+function checkMatch(){
+    for(var j =0; j<cardHost.length; j++){
+            if(userFav.includes(cardHost[j]) >= connections.length/2){ // metodi di selzione di maggiranza
+                console.log("match");
+                 //fireWorks
+                fireworks();           
+                fadeSwiper();  
+                like1.style.visibility='hidden';
+                dislike1.style.visibility = 'hidden'; 
+                
+                console.log(urls[cardHost[j]]) ;
+
+                for(var i=0;i<connections.length;i++){
+                    //connections[i].send(sender.value);
+                    connections[i].send(j);
+                    
+                } 
+                swiper1.remove("card");
+                //appendMatchedCard(urls[cardHost[j]]);
+                break;
+                //MATCH
+
+            }
+        }
+}
+
 /* handleConnection(conn){
     remotePeerIds.push(conn.peer); // Add remote peer to list
 
