@@ -43,6 +43,18 @@ class Card{
         //mouseup
         document.addEventListener('mouseup', this.#handleMouseUp);
 
+        //touchstart
+        this.element.addEventListener('touchstart', (e)=>{
+            const{clientX, clientY}=e;
+            this.#startPoint = {x:clientX, y:clientY};
+            // no transition when moving
+            this.element.style.transition= '';
+            document.addEventListener('touchmove', this.#handleMouseMove);
+        });
+
+        //touchend
+        document.addEventListener('touchend', this.#handleTouchEnd);
+
         //prevent drag
         this.element.addEventListener('dragstart', (e)=>{
             e.preventDefault();
@@ -69,6 +81,14 @@ class Card{
     #handleMouseUp = (e) => {
         this.#startPoint = null;
         document.removeEventListener('mousemove', this.#handleMouseMove);
+        //transition when move back
+        this.element.style.transition = 'transform 0.5s';
+        this.element.style.transform = '';
+    }
+
+    #handleTouchEnd = (e) => {
+        this.#startPoint = null;
+        document.removeEventListener('touchmove', this.#handleMouseMove);
         //transition when move back
         this.element.style.transition = 'transform 0.5s';
         this.element.style.transform = '';
