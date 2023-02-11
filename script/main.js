@@ -23,13 +23,17 @@ var counter = 0; //counter connection answer
 var generiTot = "";
 var showSelection = 0;
 peer = new Peer({debug: 3});
+
+
 peer.on('open', id => {
     peerIDDisplay.textContent = 'Your ID: ' + id;
     var url1 = new URL(document.URL);
     url1.searchParams.append('id',id);
     linkHost.textContent = 'Host Link: ' + url1;
 });
+
 var movies ;
+
 peer.on('connection', conn => connection(conn, false));
 
 function connection(conn, byMe) {
@@ -52,7 +56,8 @@ box.appendChild(received);
 //sender.placeholder = 'Press enter to send';
 //box.appendChild(sender);
 document.body.appendChild(box);
-conn.on('open' || 'OPEN', () => {
+
+conn.on('open', () => {
     status.innerHTML = `Open`;
     conn.on('data', data => {
     const li = document.createElement('li');
