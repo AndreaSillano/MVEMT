@@ -38,6 +38,21 @@ function appendNewCard(){
     
 }
 
+function appendMatchedCard(url){
+    const card = new Card({
+        imageUrl: url
+    });
+    //card.element.style.setProperty('--i', cardCount % 3);
+    swiper.append(card.element);
+    cardCount++;
+
+    const cards = swiper.querySelectorAll('.card:not(.dismissing');
+    cards.forEach((card,index)=>{
+        card.style.setProperty('--i', index);
+    });
+    
+}
+
 //first 3 cards
    
 
