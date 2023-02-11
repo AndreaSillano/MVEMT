@@ -110,8 +110,8 @@ width:  100vw;
 
 @media screen and (max-device-width: 980px){
     .card{
-        top: -10%;
-        scale: 0.4;
+        top: 10%;
+        scale: 0.6;
     }
 
     #like,
