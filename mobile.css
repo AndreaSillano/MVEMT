@@ -46,6 +46,8 @@ width:  100vw;
     filter: drop-shadow(2px 2px 20px rgba(0, 0, 0, 0.5));
     cursor: pointer;
     user-select: none;
+    top: 70 px;
+    perspective-origin: center;
 }
 
 .card img{
@@ -53,6 +55,8 @@ width:  100vw;
     height: 60%;
     object-fit: cover;
     object-position: 50% 50%;
+    top: 70 px;
+    perspective-origin: center;
 }
 #like,
 #dislike{
@@ -67,6 +71,7 @@ width:  100vw;
     animation-fill-mode: both;
     /* don't run animation at the beginning*/
     animation-play-state: paused;
+    bottom: 40px;
 }
 
 #like.trigger,
