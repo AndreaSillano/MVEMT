@@ -5,11 +5,12 @@ const swiper = document.querySelector('#swiper');
 var urls = [];
 //variables
 let cardCount = 0;
+var totCardurls =0;
 
 //functions
 function appendNewCard(){
     const card = new Card({
-        imageUrl: urls[cardCount%5],
+        imageUrl: urls[cardCount%totCardurls],
         onDismiss: appendNewCard
     });
     //card.element.style.setProperty('--i', cardCount % 3);
@@ -20,7 +21,7 @@ function appendNewCard(){
     cards.forEach((card,index)=>{
         card.style.setProperty('--i', index);
     });
-    console.log(urls);
+    
 }
 
 //first 3 cards
