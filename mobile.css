@@ -46,7 +46,7 @@ width:  100vw;
     filter: drop-shadow(2px 2px 20px rgba(0, 0, 0, 0.5));
     cursor: pointer;
     user-select: none;
-    top: 70 px;
+    top: 80 px;
     perspective-origin: center;
 }
 
@@ -55,7 +55,7 @@ width:  100vw;
     height: 60%;
     object-fit: cover;
     object-position: 50% 50%;
-    top: 70 px;
+    top: 80 px;
     perspective-origin: center;
 }
 #like,
