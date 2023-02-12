@@ -93,13 +93,13 @@ class Card{
 
     #handleTouchMove = (e) =>{
 
+        e.preventDefault();
+
         this.currentX = e.touches[0].clientX;
         this.currentY = e.touches[0].clientY;
 
         this.#offsetX = this.currentX - this.#startPoint.x;
         this.#offsetY = this.currentY - this.#startPoint.y;
-
-        e.preventDefault();
 
         const rotate = this.#offsetX * 0.1;
 
