@@ -94,7 +94,6 @@ class Card{
     #handleTouchMove = (e) =>{
 
         e.preventDefault();
-        e.stopPropagation();
 
         this.currentX = e.touches[0].clientX;
         this.currentY = e.touches[0].clientY;

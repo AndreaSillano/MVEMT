@@ -109,6 +109,11 @@ width:  100vw;
 }
 
 @media screen and (max-device-width: 980px){
+
+    body {
+        overflow: hidden;
+        }
+
     .card{
         top: 10%;
         scale: 0.6;
