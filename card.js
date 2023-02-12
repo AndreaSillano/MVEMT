@@ -1,5 +1,4 @@
 var cardHost = [];
-touchOrMouse=0;
 class Card{
     constructor({
         imageUrl,
@@ -20,6 +19,9 @@ class Card{
     #startPoint;
     #offsetX;
     #offsetY;
+    currentX;
+    currentY;
+    touchOrMouse=0;
 
     //private methods
     #init = ()=>{
@@ -40,7 +42,6 @@ class Card{
             // no transition when moving
             this.element.style.transition= '';
             document.addEventListener('mousemove', this.#handleMouseMove);
-            touchOrMouse=0;
         });
 
         //mouseup
@@ -48,12 +49,10 @@ class Card{
 
         //touchstart
         this.element.addEventListener('touchstart', (e)=>{
-            const{clientX, clientY}=e;
-            this.#startPoint = {x:clientX, y:clientY};
+            this.#startPoint = {x:e.touches[0].clientX, y:e.touches[0].clientY};
             // no transition when moving
             this.element.style.transition= '';
-            document.addEventListener('touchmove', this.#handleMouseMove);
-            touchOrMouse=1;
+            document.addEventListener('touchmove', this.#handleTouchMove);
         });
 
         //touchend
@@ -66,8 +65,6 @@ class Card{
     }
 
     #handleMouseMove = (e) =>{
-        if(touchOrMouse === 1)
-            e.preventDefault();
 
         if(!this.#startPoint) return;
         const {clientX, clientY} = e;
@@ -81,6 +78,7 @@ class Card{
         //dismiss card when moving too far away
         if(Math.abs(this.#offsetX) > this.element.clientWidth * 0.7){
             const direction = this.#offsetX > 0?1:-1;
+            this.touchOrMouse=0;
             this.#dismiss(direction);
         }
     }
@@ -93,9 +91,31 @@ class Card{
         this.element.style.transform = '';
     }
 
+    #handleTouchMove = (e) =>{
+
+        this.currentX = e.touches[0].clientX;
+        this.currentY = e.touches[0].clientY;
+
+        this.#offsetX = clientX - this.#startPoint.x;
+        this.#offsetY = clientY - this.#startPoint.y;
+
+        e.preventDefault();
+
+        const rotate = this.#offsetX * 0.1;
+
+        this.element.style.transform = `translate(${this.#offsetX}px, ${this.#offsetY}px) rotate(${rotate}deg)`;
+
+        //dismiss card when moving too far away
+        if(Math.abs(this.#offsetX) > this.element.clientWidth * 0.7){
+            const direction = this.#offsetX > 0?1:-1;
+            this.touchOrMouse=1;
+            this.#dismiss(direction);
+        }
+    }
+
     #handleTouchEnd = (e) => {
         this.#startPoint = null;
-        document.removeEventListener('touchmove', this.#handleMouseMove);
+        document.removeEventListener('touchmove', this.#handleTouchMove);
         //transition when move back
         this.element.style.transition = 'transform 0.5s';
         this.element.style.transform = '';
