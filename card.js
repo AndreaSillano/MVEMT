@@ -123,12 +123,12 @@ class Card{
 
     #dismiss = (direction) => {
         this.#startPoint = null;
-        if(touchOrMouse === 0){
+        if(this.touchOrMouse === 0){
             document.removeEventListener('mouseup', this.#handleMouseUp);
             document.removeEventListener('mousemove', this.#handleMouseMove);
         }
 
-        if(touchOrMouse === 1){
+        if(this.touchOrMouse === 1){
             document.removeEventListener('touchend', this.#handleMouseUp);
             document.removeEventListener('touchmove', this.#handleMouseMove);
         }
