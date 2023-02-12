@@ -96,8 +96,8 @@ class Card{
         this.currentX = e.touches[0].clientX;
         this.currentY = e.touches[0].clientY;
 
-        this.#offsetX = clientX - this.#startPoint.x;
-        this.#offsetY = clientY - this.#startPoint.y;
+        this.#offsetX = this.currentX - this.#startPoint.x;
+        this.#offsetY = this.currentY - this.#startPoint.y;
 
         e.preventDefault();
 
