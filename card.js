@@ -66,6 +66,9 @@ class Card{
     }
 
     #handleMouseMove = (e) =>{
+        if(touchOrMouse === 1)
+            e.preventDefault();
+
         if(!this.#startPoint) return;
         const {clientX, clientY} = e;
         this.#offsetX = clientX - this.#startPoint.x;
