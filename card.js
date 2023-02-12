@@ -129,8 +129,8 @@ class Card{
         }
 
         if(this.touchOrMouse === 1){
-            document.removeEventListener('touchend', this.#handleMouseUp);
-            document.removeEventListener('touchmove', this.#handleMouseMove);
+            document.removeEventListener('touchend', this.#handleTouchEnd);
+            document.removeEventListener('touchmove', this.#handleTouchMove);
         }
 
         this.element.style.transition = 'transform 1s';
