@@ -1,6 +1,6 @@
 var cardHost = [];
+touchOrMouse=0;
 class Card{
-    touchOrMouse=0;
     constructor({
         imageUrl,
         onDismiss,
@@ -40,7 +40,7 @@ class Card{
             // no transition when moving
             this.element.style.transition= '';
             document.addEventListener('mousemove', this.#handleMouseMove);
-            this.touchOrMouse=0;
+            touchOrMouse=0;
         });
 
         //mouseup
@@ -53,7 +53,7 @@ class Card{
             // no transition when moving
             this.element.style.transition= '';
             document.addEventListener('touchmove', this.#handleMouseMove);
-            this.touchOrMouse=1;
+            touchOrMouse=1;
         });
 
         //touchend
@@ -100,12 +100,12 @@ class Card{
 
     #dismiss = (direction) => {
         this.#startPoint = null;
-        if(this.touchOrMouse === 0){
+        if(touchOrMouse === 0){
             document.removeEventListener('mouseup', this.#handleMouseUp);
             document.removeEventListener('mousemove', this.#handleMouseMove);
         }
 
-        if(this.touchOrMouse === 1){
+        if(touchOrMouse === 1){
             document.removeEventListener('touchend', this.#handleMouseUp);
             document.removeEventListener('touchmove', this.#handleMouseMove);
         }
