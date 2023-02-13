@@ -35,6 +35,23 @@ width:  100vw;
     margin: auto;
 }
 
+#match{
+    height: 70vh;
+    width: 30%;
+    aspect-ratio: 2 / 3;
+    perspective: 1000px;
+    perspective-origin: center 50%;
+    transform-style: preserve-3d;
+    position: absolute;
+     position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+}
+
 .card{
     width: 100%;
     height: 100%;
@@ -84,6 +101,17 @@ width:  100vw;
     color: #ccc;
     background-color: rgba(0, 0, 0, 0.5);
     left: 100px;
+}
+#matchText{
+    
+    position: absolute;
+    scale: 0.2;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
 }
 
 @keyframes iconAnimation1 {

@@ -12,10 +12,16 @@ const genreSelection = document.getElementById('div-genres');
 const swiper1 = document.getElementById('bd');
 const like1 = document.getElementById('like');
 const dislike1 = document.getElementById('dislike');
+const cardMatch = document.getElementById("cardMatch");
+const matchText = document.getElementById("matchText");
+cardMatch.style.visibility = 'hidden';
 swiper1.style.visibility='hidden';
 genreSelection.style.visibility='hidden';
 like1.style.visibility='hidden';
 dislike1.style.visibility = 'hidden';
+matchText.style.visibility = 'hidden';
+
+
 var gen = "";
 var myId = "";
 let peer;
@@ -90,6 +96,7 @@ conn.on('open', () => {
             swiper1.style.visibility='visible';
             like1.style.visibility='visible';
             dislike1.style.visibility = 'visible';
+            
             totCardurls = data.length;
             for(let i=0; i<3; i++){
                 appendNewCard();
@@ -106,7 +113,9 @@ conn.on('open', () => {
         fadeSwiper();
         like1.style.visibility='hidden';
         dislike1.style.visibility = 'hidden';
-        swiper1.style.visibility='visible';
+       // swiper1.style.visibility='visible';
+        setTimeout( function() {  showMatchresult(data);  }, 1000);
+
 
     }
         
@@ -298,11 +307,27 @@ function checkMatch(){
                 } 
                 swiper1.remove("card");
                 //appendMatchedCard(urls[cardHost[j]]);
+ 
+
+                matchText.style.visibility = 'visible';
+                setTimeout( function() {   cardMatch.style.visibility = 'visible';
+                cardMatch.src = urls[cardHost[j]];; 
+                matchText.style.visibility = 'hidden';
+            }, 3000);
+
                 break;
                 //MATCH
 
             }
         }
+}
+function showMatchresult(data){
+    matchText.style.visibility = 'visible';
+    setTimeout( function() {   cardMatch.style.visibility = 'visible';
+    cardMatch.src = urls[data]; 
+    matchText.style.visibility = 'hidden';
+}, 3000);
+    
 }
 
 /* handleConnection(conn){
