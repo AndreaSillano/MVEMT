@@ -138,11 +138,7 @@ width:  100vw;
 
 @media screen and (max-device-width: 980px){
 
-    body {
-        overflow: hidden;
-        }
-
-    #swiper {
+    #match {
         overflow: hidden;
         }
 
