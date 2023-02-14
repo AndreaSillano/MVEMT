@@ -142,6 +142,10 @@ width:  100vw;
         overflow: hidden;
         }
 
+    #swiper {
+        overflow: hidden;
+        }
+
     .card{
         top: 10%;
         scale: 0.6;
